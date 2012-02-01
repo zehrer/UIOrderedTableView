@@ -7,7 +7,7 @@ The datamodel is only the Event class refer itself (subItems) by a to-many relat
 
 The data binding for the new ordered relationship to a UITableView needs still improvment. e.g. you have the implement event handling for add/delete for your own and iCloud doesn't support  ordered relationship yet.
 
-Therefor the typical solution is to add a addtional attribute to store the order and use a  NSFetchedResultsController to manage to view. 
+Therefore the typical solution is to add a addtional attribute to store the order and use a  NSFetchedResultsController to manage to view. 
 
 This implementation use a double value for the displayOrder and updates only the object  which the user reordered. The example shows the displayOrder in the table to see the value.
 
