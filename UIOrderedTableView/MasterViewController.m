@@ -8,16 +8,17 @@
 
 #import "MasterViewController.h"
 
-#import "DetailViewController.h"
-
 @interface MasterViewController ()
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath;
+- (void)configureCellAtIndexPath:(NSIndexPath *)indexPath;
 @end
 
 @implementation MasterViewController
 
 @synthesize fetchedResultsController = __fetchedResultsController;
 @synthesize managedObjectContext = __managedObjectContext;
+
+@synthesize rootObject;
 
 - (void)awakeFromNib
 {
@@ -35,7 +36,10 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view, typically from a nib.
+    
+    userDrivenDataModelChange = NO;
+	
+    // Do any additional setup after loading the view, typically from a nib.
     // Set up the edit and add buttons.
     self.navigationItem.leftBarButtonItem = self.editButtonItem;
 
@@ -127,21 +131,73 @@
         }
     }   
 }
+- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {         
+    
+    NSUInteger fromIndex = fromIndexPath.row;  
+    NSUInteger toIndex = toIndexPath.row;
+    
+    if (fromIndex == toIndex) return;
+    
+    NSUInteger count = [self.fetchedResultsController.fetchedObjects count];
+    
+    NSManagedObject *movingObject = [self.fetchedResultsController.fetchedObjects objectAtIndex:fromIndex];
+    
+    NSManagedObject *toObject  = [self.fetchedResultsController.fetchedObjects objectAtIndex:toIndex];
+    double toObjectDisplayOrder =  [[toObject valueForKey:@"displayOrder"] doubleValue];
+    
+    double newIndex;
+    if ( fromIndex < toIndex ) {
+        // moving up
+        if (toIndex == count-1) {
+            // toObject == last object
+            newIndex = toObjectDisplayOrder + 1.0;
+        } else  {
+            NSManagedObject *object = [self.fetchedResultsController.fetchedObjects objectAtIndex:toIndex+1];
+            double objectDisplayOrder = [[object valueForKey:@"displayOrder"] doubleValue];
+            
+            newIndex = toObjectDisplayOrder + (objectDisplayOrder - toObjectDisplayOrder) / 2.0;
+        }
+        
+    } else {
+        // moving down
+        
+        if ( toIndex == 0) {
+            // toObject == last object
+            newIndex = toObjectDisplayOrder - 1.0;
+            
+        } else {
+            
+            NSManagedObject *object = [self.fetchedResultsController.fetchedObjects objectAtIndex:toIndex-1];
+            double objectDisplayOrder = [[object valueForKey:@"displayOrder"] doubleValue];
+            
+            newIndex = objectDisplayOrder + (toObjectDisplayOrder - objectDisplayOrder) / 2.0;
 
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // The table view should not be re-orderable.
-    return NO;
-}
-
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    if ([[segue identifier] isEqualToString:@"showDetail"]) {
-        NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
-        NSManagedObject *selectedObject = [[self fetchedResultsController] objectAtIndexPath:indexPath];
-        [[segue destinationViewController] setDetailItem:selectedObject];
+        }
     }
+    
+    [movingObject setValue:[NSNumber numberWithDouble:newIndex] forKey:@"displayOrder"];
+    
+    userDrivenDataModelChange = YES;
+    
+    [self saveContext];
+
+    userDrivenDataModelChange = NO;
+    
+    // update with a short delay the moved cell
+    [self performSelector:(@selector(configureCellAtIndexPath:)) withObject:(toIndexPath) afterDelay:0.2];
 }
+
+-(NSEntityDescription *) entityDescription
+{
+    return [NSEntityDescription entityForName:@"Event" inManagedObjectContext:self.managedObjectContext];
+}
+
+- (NSPredicate *) fetchPredicate
+{
+    NSMutableSet* relationship = [self.rootObject mutableSetValueForKey:@"subItems"];
+    return [NSPredicate predicateWithFormat:@"self in %@",relationship];
+}
+
 
 #pragma mark - Fetched results controller
 
@@ -155,17 +211,20 @@
     // Create the fetch request for the entity.
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
     // Edit the entity name as appropriate.
-    NSEntityDescription *entity = [NSEntityDescription entityForName:@"Event" inManagedObjectContext:self.managedObjectContext];
+    NSEntityDescription *entity = [self entityDescription];
     [fetchRequest setEntity:entity];
     
     // Set the batch size to a suitable number.
     [fetchRequest setFetchBatchSize:20];
     
     // Edit the sort key as appropriate.
-    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"timeStamp" ascending:NO];
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"displayOrder" ascending:YES];
     NSArray *sortDescriptors = [NSArray arrayWithObjects:sortDescriptor, nil];
-    
     [fetchRequest setSortDescriptors:sortDescriptors];
+    
+    // Fetch Predicate
+    [fetchRequest setPredicate:[self fetchPredicate]];
+    
     
     // Edit the section name key path and cache name if appropriate.
     // nil for section name key path means "no sections".
@@ -189,12 +248,16 @@
 
 - (void)controllerWillChangeContent:(NSFetchedResultsController *)controller
 {
+    if (userDrivenDataModelChange) return;
+    
     [self.tableView beginUpdates];
 }
 
 - (void)controller:(NSFetchedResultsController *)controller didChangeSection:(id <NSFetchedResultsSectionInfo>)sectionInfo
            atIndex:(NSUInteger)sectionIndex forChangeType:(NSFetchedResultsChangeType)type
 {
+    if (userDrivenDataModelChange) return;
+    
     switch(type) {
         case NSFetchedResultsChangeInsert:
             [self.tableView insertSections:[NSIndexSet indexSetWithIndex:sectionIndex] withRowAnimation:UITableViewRowAnimationFade];
@@ -210,6 +273,8 @@
        atIndexPath:(NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type
       newIndexPath:(NSIndexPath *)newIndexPath
 {
+    if (userDrivenDataModelChange) return;
+    
     UITableView *tableView = self.tableView;
     
     switch(type) {
@@ -218,6 +283,7 @@
             break;
             
         case NSFetchedResultsChangeDelete:
+   
             [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
             break;
             
@@ -234,39 +300,29 @@
 
 - (void)controllerDidChangeContent:(NSFetchedResultsController *)controller
 {
+    if (userDrivenDataModelChange) return;
+
     [self.tableView endUpdates];
 }
 
-/*
-// Implementing the above methods to update the table view in response to individual changes may have performance implications if a large number of changes are made simultaneously. If this proves to be an issue, you can instead just implement controllerDidChangeContent: which notifies the delegate that all section and object changes have been processed. 
- 
- - (void)controllerDidChangeContent:(NSFetchedResultsController *)controller
+- (void)configureCellAtIndexPath:(NSIndexPath *)indexPath
 {
-    // In the simplest, most efficient, case, reload the table view.
-    [self.tableView reloadData];
+   [self configureCell:[self.tableView cellForRowAtIndexPath:indexPath] atIndexPath:indexPath];
 }
- */
+
 
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
 {
     NSManagedObject *managedObject = [self.fetchedResultsController objectAtIndexPath:indexPath];
     cell.textLabel.text = [[managedObject valueForKey:@"timeStamp"] description];
+    cell.detailTextLabel.text  = [[managedObject valueForKey:@"displayOrder"] stringValue];
 }
-
-- (void)insertNewObject
+     
+- (void)saveContext 
 {
-    // Create a new instance of the entity managed by the fetched results controller.
-    NSManagedObjectContext *context = [self.fetchedResultsController managedObjectContext];
-    NSEntityDescription *entity = [[self.fetchedResultsController fetchRequest] entity];
-    NSManagedObject *newManagedObject = [NSEntityDescription insertNewObjectForEntityForName:[entity name] inManagedObjectContext:context];
-    
-    // If appropriate, configure the new managed object.
-    // Normally you should use accessor methods, but using KVC here avoids the need to add a custom class to the template.
-    [newManagedObject setValue:[NSDate date] forKey:@"timeStamp"];
-    
     // Save the context.
     NSError *error = nil;
-    if (![context save:&error]) {
+    if (![self.managedObjectContext save:&error]) {
         /*
          Replace this implementation with code to handle the error appropriately.
          
@@ -276,5 +332,50 @@
         abort();
     }
 }
+
+- (NSManagedObject*)insertNewObject
+{
+    // Create a new instance of the entity managed by the fetched results controller.
+    NSManagedObjectContext *context = [self managedObjectContext];
+    NSEntityDescription *entity = [self entityDescription];
+    NSManagedObject *newManagedObject = [NSEntityDescription insertNewObjectForEntityForName:[entity name] inManagedObjectContext:context];
+    
+    // If appropriate, configure the new managed object.
+    // Normally you should use accessor methods, but using KVC here avoids the need to add a custom class to the template.
+    [newManagedObject setValue:[NSDate date] forKey:@"timeStamp"];
+    
+    if (self.rootObject) {
+        
+        NSMutableSet* relationship = [self.rootObject mutableSetValueForKey:@"subItems"];
+        
+        NSManagedObject *lastObject = [self.fetchedResultsController.fetchedObjects lastObject];
+        double lastObjectDisplayOrder = [[lastObject valueForKey:@"displayOrder"] doubleValue];
+        [newManagedObject setValue:[NSNumber numberWithDouble:lastObjectDisplayOrder + 1.0] forKey:@"displayOrder"];
+        
+        [relationship addObject:newManagedObject];
+    }
+    
+    [self saveContext];
+    
+    return newManagedObject;
+}
+
+-  (NSManagedObject*)rootEvent 
+{
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"parent == NULL"];
+    
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+    fetchRequest.entity =  [self entityDescription];
+    fetchRequest.predicate = predicate;
+    
+    // TODO: better Error handling :)
+    NSArray *fetchResult = [self.managedObjectContext executeFetchRequest:fetchRequest error:nil];
+    
+    if (fetchResult.count > 0)
+        return [fetchResult lastObject];
+    else
+        return NULL;
+}
+
 
 @end

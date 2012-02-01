@@ -11,8 +11,17 @@
 #import <CoreData/CoreData.h>
 
 @interface MasterViewController : UITableViewController <NSFetchedResultsControllerDelegate>
+{
+    bool userDrivenDataModelChange;
+}
 
 @property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
 @property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
+
+@property (strong, nonatomic) NSManagedObject *rootObject;
+
+- (NSManagedObject*)rootEvent;
+- (NSManagedObject*)insertNewObject;
+- (void)saveContext;
 
 @end
