@@ -57,6 +57,7 @@
 		AA12B43F14D455E60093FDB6 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		AA12B44114D455E60093FDB6 /* UIOrderedTableViewTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UIOrderedTableViewTests.h; sourceTree = "<group>"; };
 		AA12B44214D455E60093FDB6 /* UIOrderedTableViewTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UIOrderedTableViewTests.m; sourceTree = "<group>"; };
+		AA80EEE014D9DFD40055158E /* README */ = {isa = PBXFileReference; lastKnownFileType = text; path = README; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -88,6 +89,7 @@
 		AA12B3FF14D455E50093FDB6 = {
 			isa = PBXGroup;
 			children = (
+				AA80EEE014D9DFD40055158E /* README */,
 				AA12B41614D455E60093FDB6 /* UIOrderedTableView */,
 				AA12B43B14D455E60093FDB6 /* UIOrderedTableViewTests */,
 				AA12B40D14D455E60093FDB6 /* Frameworks */,
@@ -439,6 +441,7 @@
 				AA12B44814D455E60093FDB6 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		AA12B44914D455E60093FDB6 /* Build configuration list for PBXNativeTarget "UIOrderedTableViewTests" */ = {
 			isa = XCConfigurationList;
@@ -447,6 +450,7 @@
 				AA12B44B14D455E60093FDB6 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 
