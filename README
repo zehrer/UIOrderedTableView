@@ -11,7 +11,7 @@ Therefore the typical solution is to add a addtional attribute to store the orde
 
 This implementation use a double value for the displayOrder and updates only the object  which the user reordered. The example shows the displayOrder in the table to see the value.
 
-There is a known problem, if someone move a row and the double is to small. :)  In this case a reordering is required :) (TODO) 
+There is a known problem, if someone move a row to often e.g. to the same row index and the double is to small. :)  In this case a reordering is required :) (TODO) 
 
 Here some links
 
