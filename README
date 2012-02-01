@@ -1,23 +1,17 @@
 UIOrderedTableView is a iOS5 sample projct for the iPhone/iPod.
 The sample uses Automatic Reference Counting (ARC).
 
-It shows how to implement a to-many relationships and realize ordering in a UITableView.
-It is just based to the code created by the XCode 4.2.1 wizard. 
+It shows how to implement a to-many relationships and realize ordering in a UITableView. It is just based to the code created by the XCode 4.2.1 wizard. 
 
 The datamodel is only the Event class refer itself (subItems) by a to-many relationship.
 
-The data binding for the new ordered relationship to a UITableView needs still improvment.
-e.g. you have the implement event handling for add/delete for your own and iCloud doesn't support 
-ordered relationship yet.
+The data binding for the new ordered relationship to a UITableView needs still improvment. e.g. you have the implement event handling for add/delete for your own and iCloud doesn't support  ordered relationship yet.
 
-Therefor the typical solution is to add a addtional attriube to store the order and use a 
-NSFetchedResultsController to manage to view. 
+Therefor the typical solution is to add a addtional attribute to store the order and use a  NSFetchedResultsController to manage to view. 
 
-This implementation use a double value for the displayOrder and updates only the object 
-which the user reordered. The example shows the displayOrder in the table to see the value.
+This implementation use a double value for the displayOrder and updates only the object  which the user reordered. The example shows the displayOrder in the table to see the value.
 
-There is a know problem, if someone move a row and the double is to small. :) 
-In this case a reordering is required :) (TODO) 
+There is a know problem, if someone move a row and the double is to small. :)  In this case a reordering is required :) (TODO) 
 
 Here some links
 
@@ -26,5 +20,4 @@ http://stackoverflow.com/questions/1648223
 http://stackoverflow.com/questions/2360938
 http://stackoverflow.com/questions/840011
 
-All my code changes are licensed under the Apache License, Version 2.0 (the "License");
-Copyright (c) 2012 Stephan Zehrer http://www.apache.org/licenses/LICENSE-2.0
+All my code changes are licensed under the Apache License, Version 2.0 (the "License"); Copyright (c) 2012 Stephan Zehrer http://www.apache.org/licenses/LICENSE-2.0
