@@ -17,7 +17,6 @@
 		AA12B42414D455E60093FDB6 /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AA12B42214D455E60093FDB6 /* MainStoryboard.storyboard */; };
 		AA12B42714D455E60093FDB6 /* UIOrderedTableView.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = AA12B42514D455E60093FDB6 /* UIOrderedTableView.xcdatamodeld */; };
 		AA12B42A14D455E60093FDB6 /* MasterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AA12B42914D455E60093FDB6 /* MasterViewController.m */; };
-		AA12B42D14D455E60093FDB6 /* DetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AA12B42C14D455E60093FDB6 /* DetailViewController.m */; };
 		AA12B43514D455E60093FDB6 /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA12B43414D455E60093FDB6 /* SenTestingKit.framework */; };
 		AA12B43614D455E60093FDB6 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA12B40E14D455E60093FDB6 /* UIKit.framework */; };
 		AA12B43714D455E60093FDB6 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA12B41014D455E60093FDB6 /* Foundation.framework */; };
@@ -42,23 +41,21 @@
 		AA12B41014D455E60093FDB6 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		AA12B41214D455E60093FDB6 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		AA12B41414D455E60093FDB6 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
-		AA12B41814D455E60093FDB6 /* UIOrderedTableView-Info.plist */ = {isa = PBXFileReference; path = "UIOrderedTableView-Info.plist"; sourceTree = "<group>"; };
+		AA12B41814D455E60093FDB6 /* UIOrderedTableView-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "UIOrderedTableView-Info.plist"; sourceTree = "<group>"; };
 		AA12B41A14D455E60093FDB6 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		AA12B41C14D455E60093FDB6 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		AA12B41E14D455E60093FDB6 /* UIOrderedTableView-Prefix.pch */ = {isa = PBXFileReference; path = "UIOrderedTableView-Prefix.pch"; sourceTree = "<group>"; };
-		AA12B41F14D455E60093FDB6 /* AppDelegate.h */ = {isa = PBXFileReference; path = AppDelegate.h; sourceTree = "<group>"; };
+		AA12B41E14D455E60093FDB6 /* UIOrderedTableView-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIOrderedTableView-Prefix.pch"; sourceTree = "<group>"; };
+		AA12B41F14D455E60093FDB6 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		AA12B42014D455E60093FDB6 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		AA12B42314D455E60093FDB6 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard.storyboard; sourceTree = "<group>"; };
 		AA12B42614D455E60093FDB6 /* UIOrderedTableView.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = UIOrderedTableView.xcdatamodel; sourceTree = "<group>"; };
-		AA12B42814D455E60093FDB6 /* MasterViewController.h */ = {isa = PBXFileReference; path = MasterViewController.h; sourceTree = "<group>"; };
+		AA12B42814D455E60093FDB6 /* MasterViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MasterViewController.h; sourceTree = "<group>"; };
 		AA12B42914D455E60093FDB6 /* MasterViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MasterViewController.m; sourceTree = "<group>"; };
-		AA12B42B14D455E60093FDB6 /* DetailViewController.h */ = {isa = PBXFileReference; path = DetailViewController.h; sourceTree = "<group>"; };
-		AA12B42C14D455E60093FDB6 /* DetailViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DetailViewController.m; sourceTree = "<group>"; };
 		AA12B43314D455E60093FDB6 /* UIOrderedTableViewTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = UIOrderedTableViewTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
 		AA12B43414D455E60093FDB6 /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
-		AA12B43D14D455E60093FDB6 /* UIOrderedTableViewTests-Info.plist */ = {isa = PBXFileReference; path = "UIOrderedTableViewTests-Info.plist"; sourceTree = "<group>"; };
+		AA12B43D14D455E60093FDB6 /* UIOrderedTableViewTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "UIOrderedTableViewTests-Info.plist"; sourceTree = "<group>"; };
 		AA12B43F14D455E60093FDB6 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		AA12B44114D455E60093FDB6 /* UIOrderedTableViewTests.h */ = {isa = PBXFileReference; path = UIOrderedTableViewTests.h; sourceTree = "<group>"; };
+		AA12B44114D455E60093FDB6 /* UIOrderedTableViewTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UIOrderedTableViewTests.h; sourceTree = "<group>"; };
 		AA12B44214D455E60093FDB6 /* UIOrderedTableViewTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UIOrderedTableViewTests.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -127,8 +124,6 @@
 				AA12B42214D455E60093FDB6 /* MainStoryboard.storyboard */,
 				AA12B42814D455E60093FDB6 /* MasterViewController.h */,
 				AA12B42914D455E60093FDB6 /* MasterViewController.m */,
-				AA12B42B14D455E60093FDB6 /* DetailViewController.h */,
-				AA12B42C14D455E60093FDB6 /* DetailViewController.m */,
 				AA12B42514D455E60093FDB6 /* UIOrderedTableView.xcdatamodeld */,
 				AA12B41714D455E60093FDB6 /* Supporting Files */,
 			);
@@ -275,7 +270,6 @@
 				AA12B42114D455E60093FDB6 /* AppDelegate.m in Sources */,
 				AA12B42714D455E60093FDB6 /* UIOrderedTableView.xcdatamodeld in Sources */,
 				AA12B42A14D455E60093FDB6 /* MasterViewController.m in Sources */,
-				AA12B42D14D455E60093FDB6 /* DetailViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
